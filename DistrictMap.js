@@ -1,4 +1,44 @@
-const { useEffect, createElement } = React;
+const map = new mapboxgl.Map({
+  accessToken: prompt("Please enter MapBox Access Token"),
+  container: "cd13-map",
+  style: "mapbox://styles/mapbox/streets-v11",
+  center: [-118.29387970438475, 34.09178686484056],
+  zoom: 12,
+});
+
+map.on("load", () => {
+  map.addSource("oldCd13", {
+    type: "geojson",
+    data: oldCd13MultPoly,
+  });
+
+  map.addSource("newCd13", {
+    type: "geojson",
+    data: newCd13Poly,
+  });
+
+  map.addLayer({
+    id: "oldCd13Layer",
+    type: "fill",
+    source: "oldCd13",
+    layout: {},
+    paint: {
+      "fill-color": "#0080ff",
+      "fill-opacity": 0.5,
+    },
+  });
+
+  map.addLayer({
+    id: "newCd13Layer",
+    type: "fill",
+    source: "newCd13",
+    layout: {},
+    paint: {
+      "fill-color": "#ebdd1e",
+      "fill-opacity": 0.5,
+    },
+  });
+});
 
 const isUserInDistricts = ({ coords }) => {
   const { longitude, latitude } = coords;
@@ -21,73 +61,10 @@ const isUserInDistricts = ({ coords }) => {
   );
 };
 
-const DistrictMap = () => {
-  useEffect(() => {
-    const map = new mapboxgl.Map({
-      accessToken: prompt("Please enter MapBox Access Token"),
-      container: "map",
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-118.29387970438475, 34.09178686484056],
-      zoom: 12,
-    });
-
-    map.on("load", () => {
-      map.addSource("oldCd13", {
-        type: "geojson",
-        data: oldCd13MultPoly,
-      });
-
-      map.addSource("newCd13", {
-        type: "geojson",
-        data: newCd13Poly,
-      });
-
-      map.addLayer({
-        id: "oldCd13Layer",
-        type: "fill",
-        source: "oldCd13",
-        layout: {},
-        paint: {
-          "fill-color": "#0080ff",
-          "fill-opacity": 0.5,
-        },
-      });
-
-      map.addLayer({
-        id: "newCd13Layer",
-        type: "fill",
-        source: "newCd13",
-        layout: {},
-        paint: {
-          "fill-color": "#ebdd1e",
-          "fill-opacity": 0.5,
-        },
-      });
-    });
-
-    return () => map.remove();
-  }, []);
-
-  return createElement(
-    "div",
-    { className: "fill col" },
-    createElement(
-      "button",
-      {
-        onClick: () =>
-          navigator.geolocation.getCurrentPosition(isUserInDistricts, () =>
-            console.log(
-              "you must allow access to the geolocation api to use this tool"
-            )
-          ),
-      },
-      "Which District Am I In?"
-    ),
-    createElement("div", { id: "map", className: "fill" })
+document
+  .querySelector("button")
+  .addEventListener("click", () =>
+    navigator.geolocation.getCurrentPosition(isUserInDistricts, () =>
+      alert("You must allow access to the geolocation api to use this tool")
+    )
   );
-};
-
-ReactDOM.render(
-  createElement(DistrictMap),
-  document.getElementById("cd13-map")
-);
