@@ -5,12 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
     <script async src="./turf.js"></script>
     <script async src="./cd13.js"></script>
     <script async src="./DistrictMap.js"></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
+      type="text/css"
     />
     <title>Map for Kate</title>
     <style>
@@ -25,19 +31,39 @@
       body {
         width: 100vw;
         height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      }
+
+      #find-me {
+        position: absolute;
+        z-index: 1;
+        top: 3.5rem;
+        right: 10px;
+        font-size: 15px;
+        font-family: "Open Sans", "Helvetica Neue";
+        border: none;
+        padding: 0.5rem;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #777;
       }
 
       #cd13-map {
         width: 100%;
         height: 100%;
       }
+
+      @media (max-width: 640px) {
+        #find-me {
+          top: 4.5rem;
+          font-size: 18px;
+          padding: 0.75rem;
+        }
+      }
     </style>
   </head>
   <body>
-    <button>Which District Am I In?</button>
-    <div id="cd13-map" />
+    <div id="cd13-map">
+      <button id="find-me">Find Me</button>
+    </div>
   </body>
 </html>
