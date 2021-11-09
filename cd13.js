@@ -5048,3 +5048,20 @@ const newCd13Poly = {
     }
   ]
 }
+
+const world = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-180,-90],[180,-90],[180,90],[-180,90],[-180,-90]],
+          newCd13Poly.features[0].geometry.coordinates[0]
+        ]
+      }
+    }
+  ]
+}
