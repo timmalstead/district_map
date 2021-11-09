@@ -111,12 +111,12 @@ const isUserInDistricts = ({ coords }) => {
 
   alert(
     inOld && inNew
-      ? "You are in both the old and new map of the district"
+      ? "You are still in council district 13!"
       : inOld
-      ? "You are in the old map of the district only"
+      ? "You are no longer in council district 13"
       : inNew
-      ? "You are in the new map of the district only"
-      : "You have never been in the district"
+      ? "You are now in council district 13!"
+      : "You are not in council district 13"
   );
 };
 
