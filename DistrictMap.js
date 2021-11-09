@@ -1,7 +1,7 @@
-const accessToken = prompt("Please enter Mapbox token");
+const accessToken = "pk.eyJ1Ijoia2F0ZTRjb3VuY2lsIiwiYSI6ImNrdnJwODgzZzMwZmcyb210MnFmdDBuamEifQ.niFRF8wlKIqlbvbLrNGi4Q";
 
 const map = new mapboxgl.Map({
-  accessToken: "pk.eyJ1Ijoia2F0ZTRjb3VuY2lsIiwiYSI6ImNrdnJwODgzZzMwZmcyb210MnFmdDBuamEifQ.niFRF8wlKIqlbvbLrNGi4Q",
+  accessToken: accessToken,
   container: "cd13-map",
   style: "mapbox://styles/kate4council/ckvrkp0ht04y715qswbkb5c90",
   center: [-118.294, 34.11],
