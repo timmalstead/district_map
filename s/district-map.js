@@ -95,7 +95,8 @@ const geocoder = new MapboxGeocoder({
   ],
 });
 
-map.addControl(geocoder);
+// map.addControl(geocoder);
+map.scrollZoom.disable();
 
 const isUserInDistricts = ({ coords }) => {
   const { longitude, latitude } = coords;
