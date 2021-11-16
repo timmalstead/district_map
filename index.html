@@ -1,135 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
-    <script async src="/s/cd13.js"></script>
-    <script async src="/s/district-map.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
-      type="text/css"
-    />
-    <title>Map for Kate</title>
-    <style>
-      #map-wrap  *,
-      #map-wrap  *::after,
-      #map-wrap  *::before {
-        box-sizing: inherit;
-      }
 
-      #map-wrap {
-        width: 100%;
-        height: 90vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #134c14;
-      }
+<head>
+  <title>Map for Kate</title>
 
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- start squaresapce header copy here -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+  <script async src="/s/cd13.js"></script>
+  <script async src="/s/district-map.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
+    type="text/css" />
+
+
+  <style>
+    #map-wrap {
+      width: 100%;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #find-me {
+      position: absolute;
+      z-index: 1;
+      top: 3.5rem;
+      right: 10px;
+      font-size: 15px;
+      font-family: "Open Sans", "Helvetica Neue";
+      border: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #777;
+    }
+
+    #cd13-map {
+      width: 100%;
+      height: 100%;
+    }
+
+    #map-wrap .controls {
+      margin-bottom: 1em;
+    }
+
+    #map-wrap button {
+      /* background-color: #4ddeff; */
+      /* border-color: #4ddeff; */
+      color: #000;
+      font-family: "Spartan-SemiBold", "Futura", Helvetica, Arial, sans-serif;
+      font-weight: 600;
+      /* border-radius: 4px; */
+      /* border: none; */
+      /* padding: 0.5em; */
+      font-size: 18px
+    }
+
+    #legend {
+      width: 100%;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-family: "Spartan", Helvetica, Arial, sans-serif;
+      color: #fff;
+      font-size: 1.25em;
+      display: inline-block;
+    }
+
+    .legend-item+.legend-item {
+      margin-left: 1em;
+    }
+
+    .legend-item .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      background-color: #165235;
+      margin-right: 0.5em;
+    }
+
+    .icon.prior {
+      border-top: 2px dashed #ffffff;
+      opacity: 0.5;
+      height: 2px;
+      margin-bottom: 0.18em;
+    }
+
+    .icon.current {
+      border: 3px solid #000000;
+      margin-bottom: -0.25em;
+    }
+
+    @media (max-width: 640px) {
       #find-me {
-        position: absolute;
-        z-index: 1;
-        top: 3.5rem;
-        right: 10px;
-        font-size: 15px;
-        font-family: "Open Sans", "Helvetica Neue";
-        border: none;
-        padding: 0.5rem;
-        border-radius: 4px;
-        background-color: #fff;
-        color: #777;
+        top: 4.5rem;
+        font-size: 18px;
+        padding: 0.75rem;
       }
+    }
+  </style>
 
-      #cd13-map {
-        width: 100%;
-        height: 100%;
-      }
+  <!-- end squaresapce header copy here -->
 
-      #map-wrap .controls {
-        margin-bottom: 1em;
-      }
+</head>
 
-      #map-wrap button {
-        background-color: #4ddeff;
-        border-color: #4ddeff;
-        color: #000;
-        font-family: "Spartan-SemiBold", "Futura", Helvetica, Arial, sans-serif;
-        font-weight: 600;
-        border-radius: 4px;
-        border: none;
-        padding: 0.5em;
-        font-size: 18px
+<body>
 
-      }
+  <!-- start squarespace copy here -->
 
-      #legend {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-      }
+  <div id="map-wrap">
+    <div id="legend">
+      <div class="legend-item">
+        <span class="icon current"></span><span>The new district</span>
+      </div>
+      <div class="legend-item">
+        <span class="icon prior"></span><span>Prior district</span>
+      </div>
+    </div>
+    <div id="cd13-map"></div>
+  </div>
 
-      .legend-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1em;
-        font-family: "Spartan", Helvetica, Arial, sans-serif;
-        color: #fff;
-        font-size: 1.25em;
-        display: inline-block;
-      }
+  <!-- end squarespace copy here -->
 
-      .legend-item + .legend-item {
-        margin-left: 1em;
-      }
 
-      .legend-item .icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        background-color: #165235;
-        margin-right: 0.5em;
-      }
 
-      .icon.prior {
-        border-top: 2px dashed #ffffff;
-        opacity: 0.5;
-        height: 2px;
-        margin-bottom: 0.18em;
-      }
+</body>
+<!-- dont put this into squarespace -->
+<style>
+  body {
+    background-color: #004d15;
+  }
+</style>
 
-      .icon.current {
-        border: 3px solid #000000;
-        margin-bottom: -0.25em;
-      }
-
-      @media (max-width: 640px) {
-        #find-me {
-          top: 4.5rem;
-          font-size: 18px;
-          padding: 0.75rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map-wrap">
-        <div id="legend">
-          <div class="legend-item">
-            <span class="icon current"></span><span>The new district</span>
-          </div>
-          <div class="legend-item">
-            <span class="icon prior"></span><span>Prior district</span>
-          </div>
-        </div>
-        <div id="cd13-map" ></div>
-   </div>
-  </body>
 </html>

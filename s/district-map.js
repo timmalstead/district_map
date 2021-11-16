@@ -82,6 +82,11 @@ map.on("load", () => {
       },
     });
 
+    map.fitBounds([
+      [-118.37, 34.05], // southwestern corner of the bounds
+      [-118.22, 34.162] // northeastern corner of the bounds
+      ]);
+
 
 });
 
@@ -97,6 +102,7 @@ const geocoder = new MapboxGeocoder({
 
 // map.addControl(geocoder);
 map.scrollZoom.disable();
+map.addControl(new mapboxgl.NavigationControl());
 
 const isUserInDistricts = ({ coords }) => {
   const { longitude, latitude } = coords;
