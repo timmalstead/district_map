@@ -1,4 +1,5 @@
-const accessToken = "pk.eyJ1Ijoia2F0ZTRjb3VuY2lsIiwiYSI6ImNrdnJwODgzZzMwZmcyb210MnFmdDBuamEifQ.niFRF8wlKIqlbvbLrNGi4Q";
+const accessToken =
+  "pk.eyJ1Ijoia2F0ZTRjb3VuY2lsIiwiYSI6ImNrdnJwODgzZzMwZmcyb210MnFmdDBuamEifQ.niFRF8wlKIqlbvbLrNGi4Q";
 
 const map = new mapboxgl.Map({
   accessToken: accessToken,
@@ -7,7 +8,7 @@ const map = new mapboxgl.Map({
   center: [-118.294, 34.11],
   zoom: 12,
   minZoom: 10,
-  maxZoom: 17
+  maxZoom: 17,
 });
 
 map.on("load", () => {
@@ -32,7 +33,7 @@ map.on("load", () => {
     source: "oldCd13",
     paint: {
       "fill-color": "#ffffff",
-      "fill-opacity": 0
+      "fill-opacity": 0,
     },
   });
 
@@ -54,7 +55,7 @@ map.on("load", () => {
     layout: {},
     paint: {
       "fill-color": "#000",
-      "fill-opacity": 0.4
+      "fill-opacity": 0.4,
     },
   });
 
@@ -70,24 +71,22 @@ map.on("load", () => {
   });
 
   map.addLayer({
-      id: "oldCd13LayerOutline",
-      type: "line",
-      source: "oldCd13",
-      layout: {},
-      paint: {
-        "line-color": "#ffffff",
-        "line-width": 2,
-        "line-dasharray": [5, 2],
-        "line-opacity": 0.5
-      },
-    });
+    id: "oldCd13LayerOutline",
+    type: "line",
+    source: "oldCd13",
+    layout: {},
+    paint: {
+      "line-color": "#ffffff",
+      "line-width": 2,
+      "line-dasharray": [5, 2],
+      "line-opacity": 0.5,
+    },
+  });
 
-    map.fitBounds([
-      [-118.37, 34.05], // southwestern corner of the bounds
-      [-118.22, 34.162] // northeastern corner of the bounds
-      ]);
-
-
+  map.fitBounds([
+    [-118.37, 34.05], // southwestern corner of the bounds
+    [-118.22, 34.162], // northeastern corner of the bounds
+  ]);
 });
 
 const geocoder = new MapboxGeocoder({
@@ -100,37 +99,30 @@ const geocoder = new MapboxGeocoder({
   ],
 });
 
-// map.addControl(geocoder);
-map.scrollZoom.disable();
-map.addControl(new mapboxgl.NavigationControl());
-
-const isUserInDistricts = ({ coords }) => {
-  const { longitude, latitude } = coords;
-
-  const point = [longitude, latitude];
-
-  new mapboxgl.Marker().setLngLat(point).addTo(map);
+map.addControl(geocoder);
+geocoder.on("result", ({ result }) => {
+  const point = result.center;
 
   const inPolygon = window.turf.pointInPolygon.default;
 
   const inOld = inPolygon(point, oldCd13MultPoly.geometry);
-  const inNew = inPolygon(point, newCd13Poly.features[0].geometry);
+  const inNew = inPolygon(point, newCd13Poly.geometry);
 
-  alert(
+  const text =
     inOld && inNew
-      ? "You are still in council district 13!"
+      ? "You are in both the old and new cd13"
       : inOld
-      ? "You are no longer in council district 13"
+      ? "You are in the old cd13 but not the new"
       : inNew
-      ? "You are now in council district 13!"
-      : "You are not in council district 13"
-  );
-};
+      ? "You are in the new cd13 but not the old"
+      : "You have never been in cd13";
 
-document
-  .querySelector("button")
-  .addEventListener("click", () =>
-    navigator.geolocation.getCurrentPosition(isUserInDistricts, () =>
-      alert("You must allow access to the geolocation api to use this map.")
-    )
-  );
+  const spanEle = document.getElementById("result");
+
+  spanEle.innerText = text;
+
+  // setTimeout(() => spanEle.scrollIntoView(), 2000);
+});
+
+map.scrollZoom.disable();
+map.addControl(new mapboxgl.NavigationControl());
