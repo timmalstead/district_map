@@ -36,23 +36,11 @@
         align-items: center;
       }
 
-      #find-me {
-        position: absolute;
-        z-index: 1;
-        top: 3.5rem;
-        right: 10px;
-        font-size: 15px;
-        font-family: "Open Sans", "Helvetica Neue";
-        border: none;
-        padding: 0.5rem;
-        border-radius: 4px;
-        background-color: #fff;
-        color: #777;
-      }
-
       #cd13-map {
         width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
       }
 
       #map-wrap .controls {
@@ -77,6 +65,10 @@
 
       #result-wrapper {
         height: 100vh;
+      }
+
+      #geocoder {
+        margin-top: 10px;
       }
 
       .legend-item {
@@ -113,12 +105,8 @@
         margin-bottom: -0.25em;
       }
 
-      @media (max-width: 640px) {
-        #find-me {
-          top: 4.5rem;
-          font-size: 18px;
-          padding: 0.75rem;
-        }
+      .mapboxgl-ctrl-geocoder {
+        width: 25rem;
       }
     </style>
 
@@ -137,7 +125,9 @@
           <span class="icon prior"></span><span>Prior district</span>
         </div>
       </div>
-      <div id="cd13-map"></div>
+      <div id="cd13-map">
+        <div id="geocoder"></div>
+      </div>
     </div>
 
     <div id="result-wrapper">

@@ -93,13 +93,17 @@ const geocoder = new MapboxGeocoder({
   accessToken,
   mapboxgl,
   placeholder: "Search In Los Angeles",
+  flyTo: false,
   bbox: [
     -118.66817139539052, 33.70466955673143, -118.15535817284703,
     34.33730671189989,
   ],
 });
 
-map.addControl(geocoder);
+// map.addControl(geocoder);
+
+document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+
 geocoder.on("result", ({ result }) => {
   const point = result.center;
 
