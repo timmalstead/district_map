@@ -63,10 +63,6 @@
         width: 100%;
       }
 
-      #result-wrapper {
-        height: 100vh;
-      }
-
       #geocoder {
         margin-top: 10px;
       }
@@ -108,6 +104,29 @@
       .mapboxgl-ctrl-geocoder {
         width: 25rem;
       }
+
+      .redistricting-results {
+        display: none;
+      }
+
+      [data-location = "unknown"] [data-location = "unknown"]{
+        display: block;
+      }
+
+      [data-location = "remains"] [data-location = "remains"]{
+        display: block;
+      }
+
+      [data-location = "redistricted-out"] [data-location = "redistricted-out"]{
+        display: block;
+      }
+
+      [data-location = "redistricted-in"] [data-location = "redistricted-in"]{
+        display: block;
+      }
+      [data-location = "never"] [data-location = "never"]{
+        display: block;
+      }
     </style>
 
     <!-- end squaresapce header copy here -->
@@ -131,7 +150,31 @@
     </div>
 
     <div id="result-wrapper">
-      <span id="result"></span>
+      <div class="redistricting-results" data-location="unknown">
+        <h2>Enter your address above to see if you’re in CD 13</h2>
+      </div>
+      <div class="redistricting-results" data-location="remains">
+        <h2>You're still in CD 13!</h2>
+        <p class="sqsrte-large">Your donation to the campaign is espcially powerful. The campaign only gets matching funds from the city if 100 people like you donate to the campaign.</p>
+        <p class="sqsrte-large">If that happens, your donation to the campaign is matched by the city 6 to 1. A contribution of $15 turns into $105, a contribution of $114 turns into about $800, and a contribution of $800 results in almost $1,500 for the campaign.</p>
+      </div>
+      <div class="redistricting-results" data-location="redistricted-out">
+        <h2>Oh no, you don't live in CD 13 anymore</h2>
+        <p class="sqsrte-large">You used to live in CD 13 but the boundaries drawn by the redistricing commisssion have put you into a different council district.</p>
+        <p class="sqsrte-large">While you can't vote for Kate in the election, your donation to the campaign is still matched by the city 6 to 1. A contribution of $15 turns into $105, a contribution of $114 turns into about $800, and a contribution of $800 results in almost $1,500 for the campaign. </p>
+      </div>
+      <div class="redistricting-results" data-location="redistricted-in">
+        <h2>You now live in CD 13!</h2>
+        <p class="sqsrte-large">You used to live in a different district but the boundaries drawn by the redistricing commisssion put you into CD 13.</p>
+
+        <p class="sqsrte-large">Your donation to the campaign is now espcially powerful. The campaign only gets matching funds from the city if 100 people like you donate to the campaign.</p>
+
+        <p class="sqsrte-large">If that happens, your donation to the campaign is matched by the city 6 to 1. A contribution of $15 turns into $105, a contribution of $114 turns into about $800, and a contribution of $800 results in almost $1,500 for the campaign.</p>
+      </div>
+      <div class="redistricting-results" data-location="never">
+        <h2>You don't live in CD 13</h2>
+        <p class="sqsrte-large">While you can't vote for Kate you can still donate to her campaign. If you live in the City of Los Angeles, your donation to the campaign can be matched by the city 6 to 1. A contribution of $15 turns into $105, a contribution of $114 turns into about $800, and a contribution of $800 results in almost $1,500 for the campaign.</p>
+      </div>
     </div>
     <!-- end squarespace copy here -->
   </body>

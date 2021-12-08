@@ -112,21 +112,21 @@ geocoder.on("result", ({ result }) => {
   const inOld = inPolygon(point, oldCd13MultPoly.geometry);
   const inNew = inPolygon(point, newCd13Poly.geometry);
 
-  const text =
+  const location_info =
     inOld && inNew
-      ? "You are in both the old and new cd13"
+      ? "remains"
       : inOld
-      ? "You are in the old cd13 but not the new"
+      ? "redistricted-out"
       : inNew
-      ? "You are in the new cd13 but not the old"
-      : "You have never been in cd13";
+      ? "redistricted-in"
+      : "never";
 
-  const spanEle = document.getElementById("result");
+  document.querySelector("body").setAttribute("data-location", location_info);
 
-  spanEle.innerText = text;
 
   // setTimeout(() => spanEle.scrollIntoView(), 2000);
 });
 
+document.querySelector("body").setAttribute("data-location", "unknown");
 map.scrollZoom.disable();
 map.addControl(new mapboxgl.NavigationControl());
